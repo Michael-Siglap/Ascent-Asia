@@ -11,15 +11,3 @@ Your project is live at:
 
 **[https://vercel.com/michael-siglaps-projects/v0-ascent-asia-redesign](https://vercel.com/michael-siglaps-projects/v0-ascent-asia-redesign)**
 
-## Build your app
-
-Continue building your app on:
-
-**[https://v0.dev/chat/projects/dXCq8C2AvRX](https://v0.dev/chat/projects/dXCq8C2AvRX)**
-
-## How It Works
-
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository

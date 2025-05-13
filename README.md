@@ -433,7 +433,7 @@ This website was built by Silva Node Oy. For technical support and maintenance:
   - Browser and device information
   - Screenshots if applicable
 
-Silva Node Oy provides ongoing maintenance, feature development, and technical support for this website.
+For a fee, Silva Node Oy provides ongoing maintenance, feature development, and technical support for this website.
 
 \`\`\`text file=".gitignore"
 # dependencies

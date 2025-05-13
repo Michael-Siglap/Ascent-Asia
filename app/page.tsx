@@ -13,9 +13,11 @@ import Footer from "@/components/footer"
 import TestimonialCarousel from "@/components/testimonial-carousel"
 import AnimateInView from "@/components/animate-in-view"
 import PartnerBanner from "@/components/partner-banner"
+import { useLanguage } from "@/components/language-provider"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     setMounted(true)
@@ -60,9 +62,9 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
-                Empowering
+                {t("empowering")}
               </motion.span>{" "}
-              Business Internationalisation
+              {t("hero_title")}
             </h1>
             <motion.p
               className="mb-8 text-xl text-slate-200"
@@ -70,8 +72,7 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              We facilitate successful expansion of businesses into Singapore and Southeast Asia with strategic guidance
-              and local expertise.
+              {t("hero_subtitle")}
             </motion.p>
             <motion.div
               className="flex flex-wrap gap-4"
@@ -81,12 +82,12 @@ export default function Home() {
             >
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button size="lg" className="bg-amber-500 hover:bg-amber-600">
-                  Discover Our Services <ChevronRight className="ml-2 h-4 w-4" />
+                  {t("discover_services")} <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                  Contact Us
+                  {t("contact_us")}
                 </Button>
               </motion.div>
             </motion.div>
@@ -99,10 +100,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <AnimateInView>
             <div className="mb-16 text-center">
-              <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">Our Expertise</h2>
-              <p className="mx-auto max-w-2xl text-slate-600 dark:text-slate-400">
-                Comprehensive solutions to navigate the complexities of international business expansion in Asia
-              </p>
+              <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">
+                {t("our_expertise")}
+              </h2>
+              <p className="mx-auto max-w-2xl text-slate-600 dark:text-slate-400">{t("expertise_subtitle")}</p>
             </div>
           </AnimateInView>
 
@@ -118,15 +119,14 @@ export default function Home() {
                     >
                       <Globe className="h-6 w-6" />
                     </motion.div>
-                    <h3 className="mb-2 text-xl font-bold dark:text-white">Market Entry Strategy</h3>
-                    <p className="mb-4 text-slate-600 dark:text-slate-400">
-                      Tailored approaches to enter Southeast Asian markets with confidence and clarity.
-                    </p>
+                    <h3 className="mb-2 text-xl font-bold dark:text-white">{t("market_entry_strategy")}</h3>
+                    <p className="mb-4 text-slate-600 dark:text-slate-400">{t("market_entry_desc")}</p>
                     <Link
                       href="/services"
                       className="group inline-flex items-center text-amber-600 dark:text-amber-500 hover:text-amber-700 dark:hover:text-amber-400"
                     >
-                      Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      {t("learn_more")}{" "}
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </CardContent>
                 </Card>
@@ -144,15 +144,14 @@ export default function Home() {
                     >
                       <Shield className="h-6 w-6" />
                     </motion.div>
-                    <h3 className="mb-2 text-xl font-bold dark:text-white">Regulatory Compliance</h3>
-                    <p className="mb-4 text-slate-600 dark:text-slate-400">
-                      Navigate complex regulatory environments with our expert guidance and support.
-                    </p>
+                    <h3 className="mb-2 text-xl font-bold dark:text-white">{t("regulatory_compliance_title")}</h3>
+                    <p className="mb-4 text-slate-600 dark:text-slate-400">{t("regulatory_compliance_desc")}</p>
                     <Link
                       href="/services"
                       className="group inline-flex items-center text-amber-600 dark:text-amber-500 hover:text-amber-700 dark:hover:text-amber-400"
                     >
-                      Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      {t("learn_more")}{" "}
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </CardContent>
                 </Card>
@@ -170,15 +169,14 @@ export default function Home() {
                     >
                       <TrendingUp className="h-6 w-6" />
                     </motion.div>
-                    <h3 className="mb-2 text-xl font-bold dark:text-white">Business Development</h3>
-                    <p className="mb-4 text-slate-600 dark:text-slate-400">
-                      Accelerate your growth with strategic partnerships and market-specific approaches.
-                    </p>
+                    <h3 className="mb-2 text-xl font-bold dark:text-white">{t("business_dev_title")}</h3>
+                    <p className="mb-4 text-slate-600 dark:text-slate-400">{t("business_dev_desc")}</p>
                     <Link
                       href="/services"
                       className="group inline-flex items-center text-amber-600 dark:text-amber-500 hover:text-amber-700 dark:hover:text-amber-400"
                     >
-                      Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      {t("learn_more")}{" "}
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </CardContent>
                 </Card>
@@ -193,7 +191,7 @@ export default function Home() {
                   variant="outline"
                   className="border-amber-600 text-amber-600 hover:bg-amber-50 dark:border-amber-500 dark:text-amber-500 dark:hover:bg-amber-950/30"
                 >
-                  View All Services
+                  {t("view_all_services")}
                 </Button>
               </motion.div>
             </div>
@@ -201,18 +199,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Rest of the component remains unchanged */}
-      {/* ... */}
-
       {/* Core Values */}
       <section className="bg-slate-50 dark:bg-slate-800 py-20">
         <div className="container mx-auto px-4">
           <AnimateInView>
             <div className="mb-16 text-center">
-              <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">Our Core Values</h2>
-              <p className="mx-auto max-w-2xl text-slate-600 dark:text-slate-400">
-                The principles that guide our approach to business internationalization
-              </p>
+              <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">{t("core_values")}</h2>
+              <p className="mx-auto max-w-2xl text-slate-600 dark:text-slate-400">{t("core_values_subtitle")}</p>
             </div>
           </AnimateInView>
 
@@ -232,10 +225,8 @@ export default function Home() {
                     className="h-64 w-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </motion.div>
-                <h3 className="mb-3 text-2xl font-bold text-slate-800 dark:text-white">Trusted</h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  Trusted by our clients, partners and regulators, we maintain integrity in all our dealings.
-                </p>
+                <h3 className="mb-3 text-2xl font-bold text-slate-800 dark:text-white">{t("trusted")}</h3>
+                <p className="text-slate-600 dark:text-slate-400">{t("trusted_desc")}</p>
               </div>
             </AnimateInView>
 
@@ -254,10 +245,8 @@ export default function Home() {
                     className="h-64 w-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </motion.div>
-                <h3 className="mb-3 text-2xl font-bold text-slate-800 dark:text-white">Collaborative</h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  Finding and achieving shared objectives through collaborative partnerships.
-                </p>
+                <h3 className="mb-3 text-2xl font-bold text-slate-800 dark:text-white">{t("collaborative")}</h3>
+                <p className="text-slate-600 dark:text-slate-400">{t("collaborative_desc")}</p>
               </div>
             </AnimateInView>
 
@@ -276,10 +265,8 @@ export default function Home() {
                     className="h-64 w-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </motion.div>
-                <h3 className="mb-3 text-2xl font-bold text-slate-800 dark:text-white">Growth</h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  Growth-oriented in our approach, sustainable in our mindset.
-                </p>
+                <h3 className="mb-3 text-2xl font-bold text-slate-800 dark:text-white">{t("growth")}</h3>
+                <p className="text-slate-600 dark:text-slate-400">{t("growth_desc")}</p>
               </div>
             </AnimateInView>
           </div>
@@ -295,13 +282,11 @@ export default function Home() {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">Ready to expand into Southeast Asia?</h2>
-              <p className="mx-auto mb-8 max-w-2xl text-xl text-white/90">
-                Let our experts guide you through every step of your internationalization journey.
-              </p>
+              <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">{t("expansion_cta")}</h2>
+              <p className="mx-auto mb-8 max-w-2xl text-xl text-white/90">{t("expansion_cta_subtitle")}</p>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button size="lg" variant="secondary" className="bg-white text-amber-600 hover:bg-white/90">
-                  Schedule a Consultation
+                  {t("schedule_consultation")}
                 </Button>
               </motion.div>
             </motion.div>

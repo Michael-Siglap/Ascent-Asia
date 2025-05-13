@@ -2,6 +2,8 @@
 
 import type React from "react"
 import { createContext, useState, useContext, useEffect } from "react"
+import enTranslations from "@/translations/en.json"
+import zhTranslations from "@/translations/zh.json"
 
 export type LanguageCode = "en" | "zh"
 
@@ -10,27 +12,34 @@ export const languages = {
   zh: { label: "中文", flag: "🇨🇳" },
 }
 
+type Translations = {
+  [key: string]: string
+}
+
 type LanguageContextType = {
   currentLanguage: LanguageCode
   changeLanguage: (language: LanguageCode) => void
   t: (key: string) => string
-  dynamicTranslate: (text: string) => Promise<string>
 }
 
-// Create a default context value to avoid the "must be used within a provider" error
+// Create a default context value
 const defaultContextValue: LanguageContextType = {
   currentLanguage: "en",
   changeLanguage: () => {},
   t: (key) => key,
-  dynamicTranslate: async (text) => text,
 }
 
 const LanguageContext = createContext<LanguageContextType>(defaultContextValue)
 
+// Load translations
+const translations: Record<LanguageCode, Translations> = {
+  en: enTranslations,
+  zh: zhTranslations,
+}
+
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>("en")
-  const [dictionary, setDictionary] = useState<Record<string, string>>({})
-  const [isLoading, setIsLoading] = useState(true)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     // Check if there's a saved language preference
@@ -38,36 +47,17 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     if (savedLanguage && Object.keys(languages).includes(savedLanguage)) {
       setCurrentLanguage(savedLanguage)
     }
-
-    // Simple dictionary for now - in a real app, you'd load this from JSON files
-    setDictionary({
-      // English translations are the keys themselves
-    })
-    setIsLoading(false)
+    setMounted(true)
   }, [])
 
   const changeLanguage = (language: LanguageCode) => {
     setCurrentLanguage(language)
     localStorage.setItem("NEXT_LOCALE", language)
-    // In a real implementation, you would reload translations here
-    window.location.reload()
   }
 
   const t = (key: string) => {
-    return dictionary[key] || key
-  }
-
-  const dynamicTranslate = async (text: string): Promise<string> => {
-    // If we're in English or the text is very short, don't translate
-    if (currentLanguage === "en" || text.length < 5) return text
-
-    // In a real implementation, you would call a translation API here
-    return text
-  }
-
-  // Show a simple loading state
-  if (isLoading) {
-    return <>{children}</>
+    if (!mounted) return key
+    return translations[currentLanguage]?.[key] || key
   }
 
   return (
@@ -76,7 +66,6 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         currentLanguage,
         changeLanguage,
         t,
-        dynamicTranslate,
       }}
     >
       {children}

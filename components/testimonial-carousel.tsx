@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import AnimateInView from "@/components/animate-in-view"
+import { useLanguage } from "@/components/language-provider"
 
 const testimonials = [
   {
@@ -39,6 +40,7 @@ export default function TestimonialCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const { t } = useLanguage()
 
   const nextTestimonial = () => {
     setDirection(1)
@@ -65,10 +67,10 @@ export default function TestimonialCarousel() {
       <div className="container mx-auto px-4">
         <AnimateInView>
           <div className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">What Our Clients Say</h2>
-            <p className="mx-auto max-w-2xl text-slate-600 dark:text-slate-400">
-              Trusted by businesses across industries for successful internationalization
-            </p>
+            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">
+              {t("testimonials_title")}
+            </h2>
+            <p className="mx-auto max-w-2xl text-slate-600 dark:text-slate-400">{t("testimonials_subtitle")}</p>
           </div>
         </AnimateInView>
 

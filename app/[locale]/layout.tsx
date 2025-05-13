@@ -1,14 +1,22 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { NextIntlClientProvider } from "next-intl"
-import { getTranslations } from "next-intl/server"
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server"
 import { Suspense } from "react"
 
 import "../globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
+
+type Props = {
+  children: React.ReactNode
+  params: { locale: string }
+}
+
+export function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "zh" }]
+}
 
 export async function generateMetadata({
   params,
@@ -64,22 +72,9 @@ export async function generateMetadata({
   }
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: Readonly<{
-  children: React.ReactNode
-  params: { locale: string }
-}>) {
-  const locale = params.locale
-
-  let messages
-  try {
-    messages = (await import(`../../messages/${locale}.json`)).default
-  } catch (error) {
-    // Fallback to English if the locale doesn't exist
-    messages = (await import(`../../messages/en.json`)).default
-  }
+export default async function RootLayout({ children, params: { locale } }: Props) {
+  // Enable static rendering
+  unstable_setRequestLocale(locale)
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -87,13 +82,11 @@ export default async function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
-              {children}
-            </Suspense>
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+            {children}
+          </Suspense>
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -4,10 +4,10 @@ export default createMiddleware({
   // A list of all locales that are supported
   locales: ["en", "zh"],
 
-  // Used when no locale matches
+  // If this locale is matched, pathnames work without a prefix (e.g. `/about`)
   defaultLocale: "en",
 
-  // Make sure to redirect the root path to the default locale
+  // Always include the locale prefix in URLs
   localePrefix: "always",
 })
 

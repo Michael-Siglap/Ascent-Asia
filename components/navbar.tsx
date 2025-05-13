@@ -140,10 +140,10 @@ export default function NavBar() {
         {isMenuOpen && (
           <motion.div
             className="absolute left-0 right-0 top-[72px] z-20 bg-white dark:bg-slate-900 p-4 shadow-lg md:hidden"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
           >
             <nav className="flex flex-col gap-4">
               <Link
@@ -191,9 +191,11 @@ export default function NavBar() {
                 <div className="flex items-center gap-2">
                   <LanguageSwitcher className="text-slate-600 dark:text-slate-400" />
                 </div>
-                <Button size="sm" className="bg-amber-500 hover:bg-amber-600" onClick={() => setIsMenuOpen(false)}>
-                  {t("getStarted")}
-                </Button>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button size="sm" className="bg-amber-500 hover:bg-amber-600" onClick={() => setIsMenuOpen(false)}>
+                    {t("getStarted")}
+                  </Button>
+                </motion.div>
               </div>
             </nav>
           </motion.div>

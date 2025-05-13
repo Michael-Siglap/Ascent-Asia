@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { NextIntlClientProvider } from "next-intl"
 import { getTranslations } from "next-intl/server"
+import { Suspense } from "react"
 
 import "../globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -88,7 +89,9 @@ export default async function RootLayout({
       <body className={`${inter.variable} font-sans antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
+            <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+              {children}
+            </Suspense>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

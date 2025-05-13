@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { AnimatePresence } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -81,7 +81,14 @@ export default function TestimonialCarousel() {
 
             <div className="relative h-[250px] md:h-[200px]">
               <AnimatePresence mode="wait" initial={false}>
-                <div key={currentIndex} className="absolute inset-0">
+                <motion.div
+                  key={currentIndex}
+                  className="absolute inset-0"
+                  initial={{ opacity: 0, x: direction > 0 ? 100 : -100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: direction > 0 ? -100 : 100 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                >
                   <blockquote className="mb-8">
                     <p className="text-lg text-slate-700 dark:text-slate-300 md:text-xl">
                       "{testimonials[currentIndex].content}"
@@ -89,7 +96,12 @@ export default function TestimonialCarousel() {
                   </blockquote>
 
                   <div className="flex items-center gap-4">
-                    <div className="overflow-hidden rounded-full">
+                    <motion.div
+                      className="overflow-hidden rounded-full"
+                      initial={{ scale: 0.8 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.2, duration: 0.3 }}
+                    >
                       <Image
                         src={testimonials[currentIndex].avatar || "/placeholder.svg"}
                         alt={testimonials[currentIndex].author}
@@ -97,17 +109,21 @@ export default function TestimonialCarousel() {
                         height={48}
                         className="h-12 w-12 object-cover"
                       />
-                    </div>
-                    <div>
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3, duration: 0.3 }}
+                    >
                       <div className="font-semibold text-slate-900 dark:text-white">
                         {testimonials[currentIndex].author}
                       </div>
                       <div className="text-sm text-slate-500 dark:text-slate-400">
                         {testimonials[currentIndex].title}
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
-                </div>
+                </motion.div>
               </AnimatePresence>
             </div>
           </div>

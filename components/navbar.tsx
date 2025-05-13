@@ -65,6 +65,11 @@ export default function NavBar() {
             </motion.div>
             <DropdownMenuContent>
               <DropdownMenuItem>
+                <Link href="/services" className="w-full">
+                  {t("all_services") || "All Services"}
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
                 <Link href="/services/market-entry" className="w-full">
                   {t("market_entry")}
                 </Link>
@@ -77,6 +82,16 @@ export default function NavBar() {
               <DropdownMenuItem>
                 <Link href="/services/business-development" className="w-full">
                   {t("business_development")}
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/services/partnerships" className="w-full">
+                  {t("strategic_partnerships")}
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/services/advisory" className="w-full">
+                  {t("advisory_services")}
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -184,6 +199,13 @@ export default function NavBar() {
                 <div className="mb-2 font-medium">{t("services")}</div>
                 <div className="ml-4 flex flex-col gap-2">
                   <Link
+                    href="/services"
+                    className="py-1 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {t("all_services") || "All Services"}
+                  </Link>
+                  <Link
                     href="/services/market-entry"
                     className="py-1 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400"
                     onClick={() => setIsMenuOpen(false)}
@@ -203,6 +225,20 @@ export default function NavBar() {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {t("business_development")}
+                  </Link>
+                  <Link
+                    href="/services/partnerships"
+                    className="py-1 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {t("strategic_partnerships")}
+                  </Link>
+                  <Link
+                    href="/services/advisory"
+                    className="py-1 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {t("advisory_services")}
                   </Link>
                 </div>
               </div>

@@ -8,8 +8,25 @@ import { LanguageProvider } from "@/components/language-provider"
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
 export const metadata: Metadata = {
-  title: "Ascent Asia Advisory | Business Internationalization",
+  title: {
+    default: "Ascent Asia Advisory | Business Internationalization",
+    template: "%s | Ascent Asia Advisory",
+  },
   description: "We facilitate the internationalization of businesses into Singapore and Southeast Asia.",
+  alternates: {
+    languages: {
+      en: "/",
+      zh: "/zh",
+    },
+  },
+  openGraph: {
+    title: "Ascent Asia Advisory | Business Internationalization",
+    description: "We facilitate the internationalization of businesses into Singapore and Southeast Asia.",
+    url: "https://ascentasia.com",
+    siteName: "Ascent Asia Advisory",
+    locale: "en_US",
+    type: "website",
+  },
     generator: 'v0.dev'
 }
 

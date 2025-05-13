@@ -42,17 +42,36 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    // Check if there's a language in the URL path
+    const pathname = window.location.pathname
+    const urlLang = pathname.startsWith("/zh") ? "zh" : pathname.startsWith("/en") ? "en" : null
+
     // Check if there's a saved language preference
     const savedLanguage = localStorage.getItem("NEXT_LOCALE") as LanguageCode
-    if (savedLanguage && Object.keys(languages).includes(savedLanguage)) {
+
+    // Priority: URL language > saved preference > default
+    if (urlLang && Object.keys(languages).includes(urlLang)) {
+      setCurrentLanguage(urlLang as LanguageCode)
+    } else if (savedLanguage && Object.keys(languages).includes(savedLanguage)) {
       setCurrentLanguage(savedLanguage)
     }
+
     setMounted(true)
   }, [])
 
   const changeLanguage = (language: LanguageCode) => {
     setCurrentLanguage(language)
     localStorage.setItem("NEXT_LOCALE", language)
+
+    // Update URL to reflect language change (optional)
+    const currentPath = window.location.pathname
+    const strippedPath = currentPath.replace(/^\/(en|zh)/, "")
+
+    if (language === "en") {
+      window.history.pushState({}, "", strippedPath || "/")
+    } else {
+      window.history.pushState({}, "", `/${language}${strippedPath}`)
+    }
   }
 
   const t = (key: string) => {

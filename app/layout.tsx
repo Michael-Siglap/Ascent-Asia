@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
-    generator: 'v0.dev'
+  generator: "Built by Silva Node Oy",
 }
 
 export default function RootLayout({

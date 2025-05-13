@@ -263,20 +263,150 @@ To add your new page to the navigation:
 // Also add to the mobile navigation section
 \`\`\`
 
-## Deployment
+## Deployment Options
 
-This project can be deployed to Vercel or any other Next.js-compatible hosting platform.
+This Next.js application can be deployed using various platforms and methods. Here's an overview of the most popular options:
 
-### Deploying to Vercel
+### 1. Vercel (Recommended for Next.js)
 
-1. Push your code to a Git repository (GitHub, GitLab, or Bitbucket)
-2. Import your repository on [Vercel](https://vercel.com)
-3. Configure your project settings (environment variables if needed)
+[Vercel](https://vercel.com) is the platform built by the creators of Next.js and offers the most seamless deployment experience.
+
+**Features:**
+- Zero-configuration deployments
+- Automatic preview deployments for PRs
+- Built-in analytics and performance monitoring
+- Edge functions and global CDN
+- Seamless environment variable management
+
+**Deployment Steps:**
+1. Connect your GitHub repository to Vercel
+2. Configure your project settings
+3. Deploy with a single click
+
+### 2. Netlify
+
+[Netlify](https://netlify.com) is another excellent option for deploying Next.js applications.
+
+**Features:**
+- Continuous deployment from Git
+- Preview deployments
+- Form handling
+- Serverless functions
+- Edge functions
+
+**Deployment Steps:**
+1. Connect your GitHub repository to Netlify
+2. Set build command to `bun run build` and publish directory to `.next`
+3. Configure environment variables
 4. Deploy
 
-### Environment Variables
+### 3. AWS Amplify
 
-If your project uses environment variables, create a `.env.local` file for local development and add them to your deployment platform for production.
+[AWS Amplify](https://aws.amazon.com/amplify/) provides a set of tools for building and deploying full-stack applications.
+
+**Features:**
+- CI/CD workflow
+- Testing
+- Preview deployments
+- Easy integration with other AWS services
+
+**Deployment Steps:**
+1. Connect your repository to AWS Amplify
+2. Configure build settings
+3. Deploy
+
+### 4. Self-Hosted Options
+
+For more control, you can deploy to:
+
+- **Docker**: Containerize your application and deploy to any container orchestration platform
+- **Traditional VPS/VM**: Deploy to services like DigitalOcean, Linode, or AWS EC2
+- **Kubernetes**: For complex, scalable deployments
+
+## CI/CD with GitHub Actions (Best Practice)
+
+Continuous Integration and Continuous Deployment (CI/CD) via GitHub Actions is the current best practice for maintaining and deploying web applications. This approach automates testing, building, and deployment processes.
+
+### Setting Up GitHub Actions for This Project
+
+1. Create a `.github/workflows` directory in your project
+2. Add workflow files for different processes (e.g., testing, linting, deployment)
+
+### Example CI/CD Workflow
+
+Create a file at `.github/workflows/ci-cd.yml`:
+
+\`\`\`yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+          
+      - name: Install dependencies
+        run: bun install
+        
+      - name: Run linting
+        run: bun run lint
+        
+      - name: Run tests
+        run: bun test
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+\`\`\`
+
+### Benefits of CI/CD with GitHub Actions
+
+1. **Automated Testing**: Catch bugs before they reach production
+2. **Consistent Builds**: Ensure builds are reproducible and consistent
+3. **Faster Releases**: Automate the deployment process
+4. **Quality Control**: Enforce code quality standards
+5. **Collaboration**: Improve team collaboration with automated PR checks
+
+### Environment Management
+
+For managing different environments (development, staging, production):
+
+1. **Environment Variables**: Store environment-specific variables in GitHub Secrets
+2. **Branch-Based Deployments**: 
+   - `main` branch → Production
+   - `staging` branch → Staging environment
+   - Feature branches → Preview environments
+
+### Monitoring and Analytics
+
+After deployment, monitor your application using:
+
+1. **Vercel Analytics**: Built-in performance monitoring
+2. **Google Analytics**: User behavior tracking
+3. **Sentry**: Error tracking and performance monitoring
+4. **Datadog or New Relic**: For more comprehensive application monitoring
 
 ## Customization
 
@@ -293,7 +423,17 @@ If your project uses environment variables, create a `.env.local` file for local
 
 ## Support
 
-For any issues or questions, please contact the development team or create an issue in the project repository.
+This website was built by Silva Node Oy. For technical support and maintenance:
+
+- Visit [Silva Node's website](https://silvanode.com) for services and support options
+- Email [support@silvanode.com](mailto:support@silvanode.com) for direct assistance
+- When reporting issues, please include:
+  - A detailed description of the problem
+  - Steps to reproduce the issue
+  - Browser and device information
+  - Screenshots if applicable
+
+Silva Node Oy provides ongoing maintenance, feature development, and technical support for this website.
 
 \`\`\`text file=".gitignore"
 # dependencies

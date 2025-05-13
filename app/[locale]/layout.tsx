@@ -1,0 +1,96 @@
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import { NextIntlClientProvider } from "next-intl"
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server"
+
+import "../globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string }
+}): Promise<Metadata> {
+  const locale = params.locale
+
+  // Enable static rendering
+  unstable_setRequestLocale(locale)
+
+  // Get translations for metadata
+  const t = await getTranslations({ locale, namespace: "metadata" })
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    keywords: t("keywords"),
+    metadataBase: new URL("https://ascent.asia"),
+    alternates: {
+      canonical: `https://ascent.asia/${locale}`,
+      languages: {
+        en: "https://ascent.asia/en",
+        zh: "https://ascent.asia/zh",
+      },
+    },
+    openGraph: {
+      title: t("ogTitle"),
+      description: t("ogDescription"),
+      url: `https://ascent.asia/${locale}`,
+      siteName: "Ascent Asia Advisory",
+      images: [
+        {
+          url: "/images/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Ascent Asia Advisory",
+        },
+      ],
+      locale: locale,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("ogTitle"),
+      description: t("ogDescription"),
+      images: ["/images/og-image.jpg"],
+    },
+  }
+}
+
+export default async function RootLayout({
+  children,
+  params,
+}: Readonly<{
+  children: React.ReactNode
+  params: { locale: string }
+}>) {
+  const locale = params.locale
+
+  // Enable static rendering
+  unstable_setRequestLocale(locale)
+
+  let messages
+  try {
+    messages = (await import(`../../messages/${locale}.json`)).default
+  } catch (error) {
+    // Fallback to English if the locale doesn't exist
+    messages = (await import(`../../messages/en.json`)).default
+  }
+
+  return (
+    <html lang={locale} suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
+      <body className={`${inter.variable} font-sans antialiased`}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+          </ThemeProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  )
+}

@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
+import { AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import AnimateInView from "@/components/animate-in-view"
 
 const testimonials = [
   {
@@ -63,132 +62,94 @@ export default function TestimonialCarousel() {
   return (
     <section className="bg-white dark:bg-slate-900 py-20">
       <div className="container mx-auto px-4">
-        <AnimateInView>
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">What Our Clients Say</h2>
-            <p className="mx-auto max-w-2xl text-slate-600 dark:text-slate-400">
-              Trusted by businesses across industries for successful internationalization
-            </p>
-          </div>
-        </AnimateInView>
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">What Our Clients Say</h2>
+          <p className="mx-auto max-w-2xl text-slate-600 dark:text-slate-400">
+            Trusted by businesses across industries for successful internationalization
+          </p>
+        </div>
 
-        <AnimateInView delay={0.2}>
-          <div
-            className="relative mx-auto max-w-4xl"
-            onMouseEnter={() => setIsAutoPlaying(false)}
-            onMouseLeave={() => setIsAutoPlaying(true)}
-          >
-            <motion.div
-              className="overflow-hidden rounded-xl bg-slate-50 dark:bg-slate-800 p-6 shadow-lg md:p-12"
-              whileHover={{ boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
-              transition={{ duration: 0.3 }}
-            >
-              <motion.div
-                initial={{ rotate: -10, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Quote className="h-12 w-12 text-amber-200 dark:text-amber-700/50" />
-              </motion.div>
+        <div
+          className="relative mx-auto max-w-4xl"
+          onMouseEnter={() => setIsAutoPlaying(false)}
+          onMouseLeave={() => setIsAutoPlaying(true)}
+        >
+          <div className="overflow-hidden rounded-xl bg-slate-50 dark:bg-slate-800 p-6 shadow-lg md:p-12">
+            <div>
+              <Quote className="h-12 w-12 text-amber-200 dark:text-amber-700/50" />
+            </div>
 
-              <div className="relative h-[250px] md:h-[200px]">
-                <AnimatePresence mode="wait" initial={false} custom={direction}>
-                  <motion.div
-                    key={currentIndex}
-                    custom={direction}
-                    initial={{
-                      opacity: 0,
-                      x: direction > 0 ? 100 : -100,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      transition: { duration: 0.3 },
-                    }}
-                    exit={{
-                      opacity: 0,
-                      x: direction > 0 ? -100 : 100,
-                      transition: { duration: 0.3 },
-                    }}
-                    className="absolute inset-0"
-                  >
-                    <blockquote className="mb-8">
-                      <p className="text-lg text-slate-700 dark:text-slate-300 md:text-xl">
-                        "{testimonials[currentIndex].content}"
-                      </p>
-                    </blockquote>
+            <div className="relative h-[250px] md:h-[200px]">
+              <AnimatePresence mode="wait" initial={false}>
+                <div key={currentIndex} className="absolute inset-0">
+                  <blockquote className="mb-8">
+                    <p className="text-lg text-slate-700 dark:text-slate-300 md:text-xl">
+                      "{testimonials[currentIndex].content}"
+                    </p>
+                  </blockquote>
 
-                    <div className="flex items-center gap-4">
-                      <motion.div
-                        className="overflow-hidden rounded-full"
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <Image
-                          src={testimonials[currentIndex].avatar || "/placeholder.svg"}
-                          alt={testimonials[currentIndex].author}
-                          width={48}
-                          height={48}
-                          className="h-12 w-12 object-cover"
-                        />
-                      </motion.div>
-                      <div>
-                        <div className="font-semibold text-slate-900 dark:text-white">
-                          {testimonials[currentIndex].author}
-                        </div>
-                        <div className="text-sm text-slate-500 dark:text-slate-400">
-                          {testimonials[currentIndex].title}
-                        </div>
+                  <div className="flex items-center gap-4">
+                    <div className="overflow-hidden rounded-full">
+                      <Image
+                        src={testimonials[currentIndex].avatar || "/placeholder.svg"}
+                        alt={testimonials[currentIndex].author}
+                        width={48}
+                        height={48}
+                        className="h-12 w-12 object-cover"
+                      />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-slate-900 dark:text-white">
+                        {testimonials[currentIndex].author}
+                      </div>
+                      <div className="text-sm text-slate-500 dark:text-slate-400">
+                        {testimonials[currentIndex].title}
                       </div>
                     </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </motion.div>
-
-            <div className="mt-4 flex justify-center gap-2">
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={prevTestimonial}
-                  className="rounded-full border-slate-200 dark:border-slate-700"
-                  aria-label="Previous testimonial"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </Button>
-              </motion.div>
-
-              {testimonials.map((_, index) => (
-                <Button
-                  key={index}
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setDirection(index > currentIndex ? 1 : -1)
-                    setCurrentIndex(index)
-                  }}
-                  className={`h-2 min-w-2 rounded-full p-0 ${
-                    index === currentIndex ? "bg-amber-500" : "bg-slate-200 dark:bg-slate-700"
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                />
-              ))}
-
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={nextTestimonial}
-                  className="rounded-full border-slate-200 dark:border-slate-700"
-                  aria-label="Next testimonial"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </Button>
-              </motion.div>
+                  </div>
+                </div>
+              </AnimatePresence>
             </div>
           </div>
-        </AnimateInView>
+
+          <div className="mt-4 flex justify-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={prevTestimonial}
+              className="rounded-full border-slate-200 dark:border-slate-700"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+
+            {testimonials.map((_, index) => (
+              <Button
+                key={index}
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setDirection(index > currentIndex ? 1 : -1)
+                  setCurrentIndex(index)
+                }}
+                className={`h-2 min-w-2 rounded-full p-0 ${
+                  index === currentIndex ? "bg-amber-500" : "bg-slate-200 dark:bg-slate-700"
+                }`}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
+            ))}
+
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={nextTestimonial}
+              className="rounded-full border-slate-200 dark:border-slate-700"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   )

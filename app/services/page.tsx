@@ -5,10 +5,12 @@ import { ArrowRight, Globe, TrendingUp, Shield, ChevronRight } from "lucide-reac
 import { Button } from "@/components/ui/button"
 import NavBar from "@/components/navbar"
 import Footer from "@/components/footer"
+import PartnerBanner from "@/components/partner-banner"
 
 export default function ServicesPage() {
   return (
     <div className="flex min-h-screen flex-col">
+      <PartnerBanner />
       <NavBar />
 
       {/* Header */}

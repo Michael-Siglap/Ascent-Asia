@@ -1,31 +1,31 @@
-"use client";
+"use client"
 
-import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, ExternalLink, X } from "lucide-react";
-import { useTheme } from "next-themes";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion"
+import { ChevronLeft, ChevronRight, ExternalLink, X } from "lucide-react"
+import { useTheme } from "next-themes"
+import Image from "next/image"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 
 interface Partner {
-  name: string;
-  url: string;
-  description: string;
-  imageUrl: string;
+  name: string
+  url: string
+  description: string
+  imageUrl: string
 }
 
 export default function PartnerBanner() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [currentPartner, setCurrentPartner] = useState(0);
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [currentPartner, setCurrentPartner] = useState(0)
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
   const partners: Partner[] = [
     {
       name: "Hikari Nova",
       url: "https://hikarinova.com",
-      description: "See your investmens grow with Hikari Nova",
+      description: "Discover innovative Japanese technology and culture",
       imageUrl: "/images/partner-hikari.svg",
     },
     {
@@ -40,44 +40,44 @@ export default function PartnerBanner() {
       description: "Explore traditional baking recipes and techniques",
       imageUrl: "/images/partner-baking.png",
     },
-  ];
+  ]
 
   useEffect(() => {
-    setMounted(true);
+    setMounted(true)
 
     // Show banner after 5 seconds
     const timer = setTimeout(() => {
-      const bannerDismissed = localStorage.getItem("partnerBannerDismissed");
+      const bannerDismissed = localStorage.getItem("partnerBannerDismissed")
       if (bannerDismissed !== "true") {
-        setIsVisible(true);
+        setIsVisible(true)
       }
-    }, 5000);
+    }, 5000)
 
     // Rotate partners every 7 seconds
     const interval = setInterval(() => {
-      setCurrentPartner((prev) => (prev + 1) % partners.length);
-    }, 7000);
+      setCurrentPartner((prev) => (prev + 1) % partners.length)
+    }, 7000)
 
     return () => {
-      clearTimeout(timer);
-      clearInterval(interval);
-    };
-  }, [partners.length]);
+      clearTimeout(timer)
+      clearInterval(interval)
+    }
+  }, [partners.length])
 
   const dismissBanner = () => {
-    setIsVisible(false);
-    localStorage.setItem("partnerBannerDismissed", "true");
-  };
+    setIsVisible(false)
+    localStorage.setItem("partnerBannerDismissed", "true")
+  }
 
   const nextPartner = () => {
-    setCurrentPartner((prev) => (prev + 1) % partners.length);
-  };
+    setCurrentPartner((prev) => (prev + 1) % partners.length)
+  }
 
   const prevPartner = () => {
-    setCurrentPartner((prev) => (prev - 1 + partners.length) % partners.length);
-  };
+    setCurrentPartner((prev) => (prev - 1 + partners.length) % partners.length)
+  }
 
-  if (!mounted) return null;
+  if (!mounted) return null
 
   return (
     <AnimatePresence>
@@ -92,9 +92,7 @@ export default function PartnerBanner() {
           onMouseLeave={() => setIsExpanded(false)}
         >
           <motion.div
-            className={`${
-              theme === "dark" ? "bg-slate-800" : "bg-white"
-            } border ${
+            className={`${theme === "dark" ? "bg-slate-800" : "bg-white"} border ${
               theme === "dark" ? "border-slate-700" : "border-slate-200"
             } rounded-lg overflow-hidden`}
             animate={{
@@ -108,27 +106,17 @@ export default function PartnerBanner() {
               <div className="flex items-center gap-2">
                 <div className="relative h-8 w-8 overflow-hidden rounded-md">
                   <Image
-                    src={
-                      partners[currentPartner].imageUrl || "/placeholder.svg"
-                    }
+                    src={partners[currentPartner].imageUrl || "/placeholder.svg"}
                     alt={partners[currentPartner].name}
                     fill
                     className="object-cover"
                   />
                 </div>
                 <div>
-                  <p
-                    className={`text-xs ${
-                      theme === "dark" ? "text-slate-400" : "text-slate-500"
-                    }`}
-                  >
+                  <p className={`text-xs ${theme === "dark" ? "text-slate-400" : "text-slate-500"}`}>
                     Partner Highlight
                   </p>
-                  <p
-                    className={`text-sm font-medium ${
-                      theme === "dark" ? "text-white" : "text-slate-800"
-                    }`}
-                  >
+                  <p className={`text-sm font-medium ${theme === "dark" ? "text-white" : "text-slate-800"}`}>
                     {partners[currentPartner].name}
                   </p>
                 </div>
@@ -156,26 +144,17 @@ export default function PartnerBanner() {
                   <div className="p-3">
                     <div className="relative h-32 w-full overflow-hidden rounded-md mb-3">
                       <Image
-                        src={
-                          partners[currentPartner].imageUrl ||
-                          "/placeholder.svg"
-                        }
+                        src={partners[currentPartner].imageUrl || "/placeholder.svg"}
                         alt={partners[currentPartner].name}
                         fill
                         className="object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       <div className="absolute bottom-0 left-0 right-0 p-3">
-                        <p className="text-white font-medium">
-                          {partners[currentPartner].name}
-                        </p>
+                        <p className="text-white font-medium">{partners[currentPartner].name}</p>
                       </div>
                     </div>
-                    <p
-                      className={`text-sm mb-3 ${
-                        theme === "dark" ? "text-slate-300" : "text-slate-600"
-                      }`}
-                    >
+                    <p className={`text-sm mb-3 ${theme === "dark" ? "text-slate-300" : "text-slate-600"}`}>
                       {partners[currentPartner].description}
                     </p>
                     <div className="flex items-center justify-between">
@@ -226,5 +205,5 @@ export default function PartnerBanner() {
         </motion.div>
       )}
     </AnimatePresence>
-  );
+  )
 }

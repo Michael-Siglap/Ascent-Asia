@@ -2,7 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { NextIntlClientProvider } from "next-intl"
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server"
+import { getTranslations } from "next-intl/server"
 
 import "../globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -16,24 +16,24 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const locale = params.locale
 
-  // Enable static rendering
-  unstable_setRequestLocale(locale)
-
   // Get translations for metadata
   const t = await getTranslations({ locale, namespace: "metadata" })
+
+  // Define the alternate languages for hreflang tags
+  const alternateLanguages = {
+    canonical: `https://ascent.asia/${locale}`,
+    languages: {
+      en: "https://ascent.asia/en",
+      zh: "https://ascent.asia/zh",
+    },
+  }
 
   return {
     title: t("title"),
     description: t("description"),
     keywords: t("keywords"),
     metadataBase: new URL("https://ascent.asia"),
-    alternates: {
-      canonical: `https://ascent.asia/${locale}`,
-      languages: {
-        en: "https://ascent.asia/en",
-        zh: "https://ascent.asia/zh",
-      },
-    },
+    alternates: alternateLanguages,
     openGraph: {
       title: t("ogTitle"),
       description: t("ogDescription"),
@@ -56,6 +56,10 @@ export async function generateMetadata({
       description: t("ogDescription"),
       images: ["/images/og-image.jpg"],
     },
+    robots: {
+      index: true,
+      follow: true,
+    },
   }
 }
 
@@ -67,9 +71,6 @@ export default async function RootLayout({
   params: { locale: string }
 }>) {
   const locale = params.locale
-
-  // Enable static rendering
-  unstable_setRequestLocale(locale)
 
   let messages
   try {

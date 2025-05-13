@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { CheckCircle, Lightbulb, LineChart, Users, ArrowRight, BrainCircuit } from "lucide-react"
+import { CheckCircle, Lightbulb, LineChart, Users, ArrowRight, BrainCircuit, Briefcase } from "lucide-react"
 import { motion } from "framer-motion"
 
 import { Button } from "@/components/ui/button"
@@ -30,7 +30,7 @@ export default function AdvisoryServicesPage() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-slate-900 to-slate-800 py-20 md:py-28">
         <div className="absolute inset-0 opacity-20">
-          <Image src="/placeholder.svg?key=advisory-pattern" alt="Advisory Pattern" fill className="object-cover" />
+          <Image src="/placeholder.svg?key=pk2m5" alt="Advisory Pattern" fill className="object-cover" />
         </div>
         <div className="container relative mx-auto px-4">
           <div className="grid gap-12 md:grid-cols-2">
@@ -59,7 +59,7 @@ export default function AdvisoryServicesPage() {
             </div>
             <div className="flex justify-center">
               <Image
-                src="/placeholder.svg?key=advisory-hero"
+                src="/placeholder.svg?key=5ab4j"
                 alt="Advisory Services"
                 width={500}
                 height={400}
@@ -70,8 +70,25 @@ export default function AdvisoryServicesPage() {
         </div>
       </section>
 
+      {/* Overview Section */}
+      <section className="py-16 bg-white dark:bg-slate-900">
+        <div className="container mx-auto px-4">
+          <AnimateInView>
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="mb-6 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">
+                {t("advisory_overview") || "Navigate Business Complexities with Confidence"}
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-400">
+                {t("advisory_overview_desc") ||
+                  "Our advisory services provide expert guidance to help your business overcome challenges, identify opportunities, and achieve sustainable growth in Southeast Asian markets. With deep local knowledge and industry expertise, we deliver actionable insights tailored to your specific needs."}
+              </p>
+            </div>
+          </AnimateInView>
+        </div>
+      </section>
+
       {/* Advisory Areas Section */}
-      <section className="py-20 bg-white dark:bg-slate-900">
+      <section className="py-20 bg-slate-50 dark:bg-slate-800">
         <div className="container mx-auto px-4">
           <AnimateInView>
             <div className="mb-16 text-center">
@@ -87,7 +104,11 @@ export default function AdvisoryServicesPage() {
 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             <AnimateInView delay={0.1}>
-              <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-lg shadow-sm h-full">
+              <motion.div
+                className="bg-white dark:bg-slate-900 p-8 rounded-lg shadow-sm h-full"
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <div className="mb-6 h-14 w-14 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
                   <LineChart className="h-7 w-7 text-amber-600 dark:text-amber-400" />
                 </div>
@@ -116,11 +137,15 @@ export default function AdvisoryServicesPage() {
                     <span className="dark:text-slate-300">{t("growth_planning") || "Growth planning"}</span>
                   </li>
                 </ul>
-              </div>
+              </motion.div>
             </AnimateInView>
 
             <AnimateInView delay={0.2}>
-              <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-lg shadow-sm h-full">
+              <motion.div
+                className="bg-white dark:bg-slate-900 p-8 rounded-lg shadow-sm h-full"
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <div className="mb-6 h-14 w-14 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
                   <Users className="h-7 w-7 text-amber-600 dark:text-amber-400" />
                 </div>
@@ -145,11 +170,15 @@ export default function AdvisoryServicesPage() {
                     <span className="dark:text-slate-300">{t("organizational_design") || "Organizational design"}</span>
                   </li>
                 </ul>
-              </div>
+              </motion.div>
             </AnimateInView>
 
             <AnimateInView delay={0.3}>
-              <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-lg shadow-sm h-full">
+              <motion.div
+                className="bg-white dark:bg-slate-900 p-8 rounded-lg shadow-sm h-full"
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <div className="mb-6 h-14 w-14 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
                   <BrainCircuit className="h-7 w-7 text-amber-600 dark:text-amber-400" />
                 </div>
@@ -178,19 +207,19 @@ export default function AdvisoryServicesPage() {
                     </span>
                   </li>
                 </ul>
-              </div>
+              </motion.div>
             </AnimateInView>
           </div>
         </div>
       </section>
 
       {/* Approach Section */}
-      <section className="bg-slate-50 dark:bg-slate-800 py-20">
+      <section className="py-20 bg-white dark:bg-slate-900">
         <div className="container mx-auto px-4">
-          <div className="grid gap-12 md:grid-cols-2">
+          <div className="grid gap-12 md:grid-cols-2 items-center">
             <div className="order-2 md:order-1">
               <Image
-                src="/placeholder.svg?key=advisory-approach"
+                src="/placeholder.svg?key=366ue"
                 alt="Our Advisory Approach"
                 width={500}
                 height={400}
@@ -261,7 +290,7 @@ export default function AdvisoryServicesPage() {
       </section>
 
       {/* Industry Expertise Section */}
-      <section className="py-20 bg-white dark:bg-slate-900">
+      <section className="py-20 bg-slate-50 dark:bg-slate-800">
         <div className="container mx-auto px-4">
           <AnimateInView>
             <div className="mb-16 text-center">
@@ -278,12 +307,12 @@ export default function AdvisoryServicesPage() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <AnimateInView delay={0.1}>
               <motion.div
-                className="bg-slate-50 dark:bg-slate-800 p-6 rounded-lg shadow-sm text-center"
+                className="bg-white dark:bg-slate-900 p-6 rounded-lg shadow-sm text-center"
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30 mb-4">
-                  <Image src="/placeholder.svg?key=tech-icon" alt="Technology" width={40} height={40} />
+                  <BrainCircuit className="h-8 w-8 text-amber-600 dark:text-amber-400" />
                 </div>
                 <h3 className="text-xl font-bold mb-2 dark:text-white">{t("technology") || "Technology"}</h3>
                 <p className="text-slate-600 dark:text-slate-400">
@@ -294,12 +323,12 @@ export default function AdvisoryServicesPage() {
 
             <AnimateInView delay={0.2}>
               <motion.div
-                className="bg-slate-50 dark:bg-slate-800 p-6 rounded-lg shadow-sm text-center"
+                className="bg-white dark:bg-slate-900 p-6 rounded-lg shadow-sm text-center"
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30 mb-4">
-                  <Image src="/placeholder.svg?key=manufacturing-icon" alt="Manufacturing" width={40} height={40} />
+                  <Briefcase className="h-8 w-8 text-amber-600 dark:text-amber-400" />
                 </div>
                 <h3 className="text-xl font-bold mb-2 dark:text-white">{t("manufacturing") || "Manufacturing"}</h3>
                 <p className="text-slate-600 dark:text-slate-400">
@@ -310,12 +339,12 @@ export default function AdvisoryServicesPage() {
 
             <AnimateInView delay={0.3}>
               <motion.div
-                className="bg-slate-50 dark:bg-slate-800 p-6 rounded-lg shadow-sm text-center"
+                className="bg-white dark:bg-slate-900 p-6 rounded-lg shadow-sm text-center"
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30 mb-4">
-                  <Image src="/placeholder.svg?key=healthcare-icon" alt="Healthcare" width={40} height={40} />
+                  <Users className="h-8 w-8 text-amber-600 dark:text-amber-400" />
                 </div>
                 <h3 className="text-xl font-bold mb-2 dark:text-white">{t("healthcare") || "Healthcare"}</h3>
                 <p className="text-slate-600 dark:text-slate-400">
@@ -326,12 +355,12 @@ export default function AdvisoryServicesPage() {
 
             <AnimateInView delay={0.4}>
               <motion.div
-                className="bg-slate-50 dark:bg-slate-800 p-6 rounded-lg shadow-sm text-center"
+                className="bg-white dark:bg-slate-900 p-6 rounded-lg shadow-sm text-center"
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30 mb-4">
-                  <Image src="/placeholder.svg?key=financial-icon" alt="Financial Services" width={40} height={40} />
+                  <LineChart className="h-8 w-8 text-amber-600 dark:text-amber-400" />
                 </div>
                 <h3 className="text-xl font-bold mb-2 dark:text-white">
                   {t("financial_services") || "Financial Services"}
@@ -346,7 +375,7 @@ export default function AdvisoryServicesPage() {
       </section>
 
       {/* Case Studies Section */}
-      <section className="bg-slate-50 dark:bg-slate-800 py-20">
+      <section className="py-20 bg-white dark:bg-slate-900">
         <div className="container mx-auto px-4">
           <AnimateInView>
             <div className="mb-16 text-center">
@@ -362,17 +391,12 @@ export default function AdvisoryServicesPage() {
           <div className="grid gap-8 md:grid-cols-2">
             <AnimateInView delay={0.1}>
               <motion.div
-                className="bg-white dark:bg-slate-900 rounded-lg overflow-hidden shadow-md"
+                className="bg-slate-50 dark:bg-slate-800 rounded-lg overflow-hidden shadow-md"
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="relative h-60">
-                  <Image
-                    src="/placeholder.svg?key=digital-transformation"
-                    alt="Digital Transformation"
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src="/placeholder.svg?key=tg2sr" alt="Digital Transformation" fill className="object-cover" />
                 </div>
                 <div className="p-6">
                   <h3 className="mb-3 text-xl font-bold dark:text-white">
@@ -391,17 +415,12 @@ export default function AdvisoryServicesPage() {
 
             <AnimateInView delay={0.2}>
               <motion.div
-                className="bg-white dark:bg-slate-900 rounded-lg overflow-hidden shadow-md"
+                className="bg-slate-50 dark:bg-slate-800 rounded-lg overflow-hidden shadow-md"
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="relative h-60">
-                  <Image
-                    src="/placeholder.svg?key=market-expansion"
-                    alt="Market Expansion"
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src="/placeholder.svg?key=h70s4" alt="Market Expansion" fill className="object-cover" />
                 </div>
                 <div className="p-6">
                   <h3 className="mb-3 text-xl font-bold dark:text-white">
@@ -421,8 +440,45 @@ export default function AdvisoryServicesPage() {
         </div>
       </section>
 
+      {/* Testimonial Section */}
+      <section className="bg-slate-50 dark:bg-slate-800 py-16">
+        <div className="container mx-auto px-4">
+          <AnimateInView>
+            <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 p-8 md:p-12 rounded-lg shadow-lg">
+              <div className="flex flex-col md:flex-row gap-8 items-center">
+                <div className="w-24 h-24 rounded-full overflow-hidden flex-shrink-0">
+                  <Image
+                    src="/placeholder.svg?height=200&width=200&query=professional asian business woman portrait"
+                    alt="Client Testimonial"
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <div className="mb-4 text-amber-500">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className="text-xl">
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <blockquote className="text-lg italic text-slate-600 dark:text-slate-300 mb-4">
+                    "Ascent Asia's advisory team provided invaluable guidance during our expansion into Singapore. Their
+                    deep understanding of local regulations and market dynamics helped us avoid costly mistakes and
+                    accelerate our growth."
+                  </blockquote>
+                  <div className="font-semibold text-slate-900 dark:text-white">Sarah Chen</div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400">CEO, TechNova Solutions</div>
+                </div>
+              </div>
+            </div>
+          </AnimateInView>
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-slate-900 to-slate-800 py-16">
+      <section className="bg-gradient-to-r from-amber-500 to-amber-600 py-16">
         <div className="container mx-auto px-4 text-center">
           <AnimateInView>
             <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">
@@ -435,7 +491,8 @@ export default function AdvisoryServicesPage() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 size="lg"
-                className="bg-amber-500 hover:bg-amber-600 text-white dark:bg-amber-500 dark:hover:bg-amber-600 dark:text-white"
+                variant="secondary"
+                className="bg-white text-amber-600 hover:bg-white/90 dark:bg-white dark:text-amber-600 dark:hover:bg-white/90"
               >
                 {t("schedule_consultation")}
               </Button>

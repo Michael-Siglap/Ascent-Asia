@@ -3,29 +3,39 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, X, MoonIcon, SunIcon } from "lucide-react"
+import { Menu, X, ChevronDown, Globe, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
-import { useTranslations, useLocale } from "next-intl"
 
 import { Button } from "@/components/ui/button"
-import LanguageSwitcher from "@/components/language-switcher"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { languages, type LanguageCode } from "@/components/language-provider"
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-  const t = useTranslations("navbar")
-  const tServices = useTranslations("services")
-  const locale = useLocale()
+  const [currentLang, setCurrentLang] = useState<LanguageCode>("en")
 
   // Prevent hydration mismatch
   useEffect(() => {
     setMounted(true)
+    // Get the saved language from localStorage
+    const savedLang = localStorage.getItem("NEXT_LOCALE") as LanguageCode
+    if (savedLang && Object.keys(languages).includes(savedLang)) {
+      setCurrentLang(savedLang)
+    }
   }, [])
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark")
+  }
+
+  const handleLanguageChange = (lang: LanguageCode) => {
+    setCurrentLang(lang)
+    localStorage.setItem("NEXT_LOCALE", lang)
+    // In a real implementation, you would trigger a page reload or context update here
+    window.location.reload()
   }
 
   return (
@@ -36,7 +46,7 @@ export default function NavBar() {
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
-        <Link href={`/${locale}`} className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <motion.div whileHover={{ rotate: [0, -10, 10, -10, 0] }} transition={{ duration: 0.5 }}>
             <Image src="/images/logo.png" alt="Ascent Asia Advisory" width={40} height={40} />
           </motion.div>
@@ -50,37 +60,53 @@ export default function NavBar() {
         <nav className="hidden items-center gap-8 md:flex">
           <motion.div whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 500 }}>
             <Link
-              href={`/${locale}`}
+              href="/"
               className="text-slate-800 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400"
             >
-              {t("home")}
+              Home
+            </Link>
+          </motion.div>
+
+          <DropdownMenu>
+            <motion.div whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 500 }}>
+              <DropdownMenuTrigger className="flex items-center gap-1 text-slate-800 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400">
+                Services <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
+            </motion.div>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <Link href="/services/market-entry" className="w-full">
+                  Market Entry
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/services/regulatory" className="w-full">
+                  Regulatory Compliance
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/services/business-development" className="w-full">
+                  Business Development
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <motion.div whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 500 }}>
+            <Link
+              href="/about"
+              className="text-slate-800 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400"
+            >
+              About Us
             </Link>
           </motion.div>
 
           <motion.div whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 500 }}>
             <Link
-              href={`/${locale}/services`}
+              href="/contact"
               className="text-slate-800 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400"
             >
-              {t("services")}
-            </Link>
-          </motion.div>
-
-          <motion.div whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 500 }}>
-            <Link
-              href={`/${locale}/about`}
-              className="text-slate-800 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400"
-            >
-              {t("aboutUs")}
-            </Link>
-          </motion.div>
-
-          <motion.div whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 500 }}>
-            <Link
-              href={`/${locale}/contact`}
-              className="text-slate-800 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400"
-            >
-              {t("contact")}
+              Contact
             </Link>
           </motion.div>
         </nav>
@@ -104,10 +130,21 @@ export default function NavBar() {
             </motion.div>
           )}
 
-          <LanguageSwitcher />
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center gap-1 text-slate-600 dark:text-slate-400">
+              <Globe className="h-4 w-4" /> {languages[currentLang].flag} {currentLang.toUpperCase()}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {Object.entries(languages).map(([code, { label, flag }]) => (
+                <DropdownMenuItem key={code} onClick={() => handleLanguageChange(code as LanguageCode)}>
+                  <span className="mr-2">{flag}</span> {label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button className="bg-amber-500 hover:bg-amber-600">{t("getStarted")}</Button>
+            <Button className="bg-amber-500 hover:bg-amber-600">Get Started</Button>
           </motion.div>
         </div>
 
@@ -140,39 +177,58 @@ export default function NavBar() {
         {isMenuOpen && (
           <motion.div
             className="absolute left-0 right-0 top-[72px] z-20 bg-white dark:bg-slate-900 p-4 shadow-lg md:hidden"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
           >
             <nav className="flex flex-col gap-4">
               <Link
-                href={`/${locale}`}
+                href="/"
                 className="p-2 text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {t("home")}
+                Home
+              </Link>
+              <div className="p-2 text-slate-800 dark:text-white">
+                <div className="mb-2 font-medium">Services</div>
+                <div className="ml-4 flex flex-col gap-2">
+                  <Link
+                    href="/services/market-entry"
+                    className="py-1 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Market Entry
+                  </Link>
+                  <Link
+                    href="/services/regulatory"
+                    className="py-1 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Regulatory Compliance
+                  </Link>
+                  <Link
+                    href="/services/business-development"
+                    className="py-1 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Business Development
+                  </Link>
+                </div>
+              </div>
+              <Link
+                href="/about"
+                className="p-2 text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About Us
               </Link>
               <Link
-                href={`/${locale}/services`}
+                href="/contact"
                 className="p-2 text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {t("services")}
-              </Link>
-              <Link
-                href={`/${locale}/about`}
-                className="p-2 text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t("aboutUs")}
-              </Link>
-              <Link
-                href={`/${locale}/contact`}
-                className="p-2 text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t("contact")}
+                Contact
               </Link>
 
               {mounted && (
@@ -188,14 +244,12 @@ export default function NavBar() {
               )}
 
               <div className="flex items-center justify-between p-2">
-                <div className="flex items-center gap-2">
-                  <LanguageSwitcher className="text-slate-600 dark:text-slate-400" />
+                <div className="flex items-center gap-1 text-slate-600 dark:text-slate-400">
+                  <Globe className="h-4 w-4" /> {languages[currentLang].flag} {currentLang.toUpperCase()}
                 </div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button size="sm" className="bg-amber-500 hover:bg-amber-600" onClick={() => setIsMenuOpen(false)}>
-                    {t("getStarted")}
-                  </Button>
-                </motion.div>
+                <Button size="sm" className="bg-amber-500 hover:bg-amber-600" onClick={() => setIsMenuOpen(false)}>
+                  Get Started
+                </Button>
               </div>
             </nav>
           </motion.div>

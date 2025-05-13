@@ -1,49 +1,89 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import { useRouter, usePathname } from "next/navigation"
-import { useLocale } from "next-intl"
+import type React from "react"
+import { createContext, useState, useContext, useEffect } from "react"
 
-type Language = "en" | "zh"
+export type LanguageCode = "en" | "zh"
 
-interface LanguageContextType {
-  language: Language
-  setLanguage: (language: Language) => void
+export const languages = {
+  en: { label: "English", flag: "🇺🇸" },
+  zh: { label: "中文", flag: "🇨🇳" },
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
+type LanguageContextType = {
+  currentLanguage: LanguageCode
+  changeLanguage: (language: LanguageCode) => void
+  t: (key: string) => string
+  dynamicTranslate: (text: string) => Promise<string>
+}
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const locale = useLocale() as Language
-  const [language, setLanguageState] = useState<Language>(locale)
-  const router = useRouter()
-  const pathname = usePathname()
+// Create a default context value to avoid the "must be used within a provider" error
+const defaultContextValue: LanguageContextType = {
+  currentLanguage: "en",
+  changeLanguage: () => {},
+  t: (key) => key,
+  dynamicTranslate: async (text) => text,
+}
+
+const LanguageContext = createContext<LanguageContextType>(defaultContextValue)
+
+export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
+  const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>("en")
+  const [dictionary, setDictionary] = useState<Record<string, string>>({})
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Update state when locale changes
-    setLanguageState(locale)
-  }, [locale])
+    // Check if there's a saved language preference
+    const savedLanguage = localStorage.getItem("NEXT_LOCALE") as LanguageCode
+    if (savedLanguage && Object.keys(languages).includes(savedLanguage)) {
+      setCurrentLanguage(savedLanguage)
+    }
 
-  const setLanguage = (newLanguage: Language) => {
-    if (newLanguage === language) return
+    // Simple dictionary for now - in a real app, you'd load this from JSON files
+    setDictionary({
+      // English translations are the keys themselves
+    })
+    setIsLoading(false)
+  }, [])
 
-    setLanguageState(newLanguage)
-    localStorage.setItem("language", newLanguage)
-
-    // Get the current path without the locale prefix
-    const pathWithoutLocale = pathname.replace(/^\/[^/]+/, "")
-
-    // Navigate to the new locale path
-    router.push(`/${newLanguage}${pathWithoutLocale}`)
+  const changeLanguage = (language: LanguageCode) => {
+    setCurrentLanguage(language)
+    localStorage.setItem("NEXT_LOCALE", language)
+    // In a real implementation, you would reload translations here
+    window.location.reload()
   }
 
-  return <LanguageContext.Provider value={{ language, setLanguage }}>{children}</LanguageContext.Provider>
+  const t = (key: string) => {
+    return dictionary[key] || key
+  }
+
+  const dynamicTranslate = async (text: string): Promise<string> => {
+    // If we're in English or the text is very short, don't translate
+    if (currentLanguage === "en" || text.length < 5) return text
+
+    // In a real implementation, you would call a translation API here
+    return text
+  }
+
+  // Show a simple loading state
+  if (isLoading) {
+    return <>{children}</>
+  }
+
+  return (
+    <LanguageContext.Provider
+      value={{
+        currentLanguage,
+        changeLanguage,
+        t,
+        dynamicTranslate,
+      }}
+    >
+      {children}
+    </LanguageContext.Provider>
+  )
 }
 
-export function useLanguage() {
-  const context = useContext(LanguageContext)
-  if (context === undefined) {
-    throw new Error("useLanguage must be used within a LanguageProvider")
-  }
-  return context
+export const useLanguage = () => {
+  return useContext(LanguageContext)
 }

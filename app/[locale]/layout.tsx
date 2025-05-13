@@ -1,7 +1,8 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server"
+import { getTranslations } from "next-intl/server"
+import { NextIntlClientProvider } from "next-intl"
 import { Suspense } from "react"
 
 import "../globals.css"
@@ -73,8 +74,13 @@ export async function generateMetadata({
 }
 
 export default async function RootLayout({ children, params: { locale } }: Props) {
-  // Enable static rendering
-  unstable_setRequestLocale(locale)
+  let messages
+  try {
+    messages = (await import(`../../messages/${locale}.json`)).default
+  } catch (error) {
+    // Fallback to English if the locale doesn't exist
+    messages = (await import(`../../messages/en.json`)).default
+  }
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -82,11 +88,13 @@ export default async function RootLayout({ children, params: { locale } }: Props
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
-            {children}
-          </Suspense>
-        </ThemeProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+              {children}
+            </Suspense>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

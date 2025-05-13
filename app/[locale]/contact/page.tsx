@@ -1,9 +1,4 @@
-import { unstable_setRequestLocale } from "next-intl/server"
-
 export default function ContactPage({ params: { locale } }: { params: { locale: string } }) {
-  // Enable static rendering
-  unstable_setRequestLocale(locale)
-
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4 text-center">
       <h1 className="text-4xl font-bold mb-4">Contact Us</h1>

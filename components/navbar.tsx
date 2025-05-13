@@ -3,13 +3,12 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, X, ChevronDown, MoonIcon, SunIcon } from "lucide-react"
+import { Menu, X, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTranslations, useLocale } from "next-intl"
 
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import LanguageSwitcher from "@/components/language-switcher"
 
 export default function NavBar() {
@@ -58,30 +57,14 @@ export default function NavBar() {
             </Link>
           </motion.div>
 
-          <DropdownMenu>
-            <motion.div whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 500 }}>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-slate-800 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400">
-                {t("services")} <ChevronDown className="h-4 w-4" />
-              </DropdownMenuTrigger>
-            </motion.div>
-            <DropdownMenuContent>
-              <DropdownMenuItem>
-                <Link href={`/${locale}/services/market-entry`} className="w-full">
-                  {tServices("marketEntry")}
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href={`/${locale}/services/regulatory`} className="w-full">
-                  {tServices("regulatory")}
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href={`/${locale}/services/business-development`} className="w-full">
-                  {tServices("businessDev")}
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <motion.div whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 500 }}>
+            <Link
+              href={`/${locale}/services`}
+              className="text-slate-800 dark:text-slate-200 hover:text-amber-500 dark:hover:text-amber-400"
+            >
+              {t("services")}
+            </Link>
+          </motion.div>
 
           <motion.div whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 500 }}>
             <Link
@@ -170,32 +153,13 @@ export default function NavBar() {
               >
                 {t("home")}
               </Link>
-              <div className="p-2 text-slate-800 dark:text-white">
-                <div className="mb-2 font-medium">{t("services")}</div>
-                <div className="ml-4 flex flex-col gap-2">
-                  <Link
-                    href={`/${locale}/services/market-entry`}
-                    className="py-1 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {tServices("marketEntry")}
-                  </Link>
-                  <Link
-                    href={`/${locale}/services/regulatory`}
-                    className="py-1 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {tServices("regulatory")}
-                  </Link>
-                  <Link
-                    href={`/${locale}/services/business-development`}
-                    className="py-1 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {tServices("businessDev")}
-                  </Link>
-                </div>
-              </div>
+              <Link
+                href={`/${locale}/services`}
+                className="p-2 text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("services")}
+              </Link>
               <Link
                 href={`/${locale}/about`}
                 className="p-2 text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800"

@@ -86,7 +86,11 @@ export default function Home() {
                 </Button>
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-white text-white hover:bg-white/10 dark:border-white dark:text-white dark:hover:bg-white/10"
+                >
                   {t("contact_us")}
                 </Button>
               </motion.div>
@@ -285,7 +289,11 @@ export default function Home() {
               <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">{t("expansion_cta")}</h2>
               <p className="mx-auto mb-8 max-w-2xl text-xl text-white/90">{t("expansion_cta_subtitle")}</p>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="lg" variant="secondary" className="bg-white text-amber-600 hover:bg-white/90">
+                <Button
+                  size="lg"
+                  variant="secondary"
+                  className="bg-white text-amber-600 hover:bg-white/90 dark:bg-white dark:text-amber-600 dark:hover:bg-white/90"
+                >
                   {t("schedule_consultation")}
                 </Button>
               </motion.div>

@@ -1,13 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from "lucide-react"
 import { motion } from "framer-motion"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import AnimateInView from "@/components/animate-in-view"
+import Logo from "@/components/logo-with-filter"
 
 export default function Footer() {
   return (
@@ -18,7 +18,7 @@ export default function Footer() {
             <div className="space-y-4">
               <Link href="/" className="flex items-start gap-2">
                 <motion.div whileHover={{ rotate: [0, -10, 10, -10, 0] }} transition={{ duration: 0.5 }}>
-                  <Image src="/images/logo-white.png" alt="Ascent Asia Advisory" width={40} height={40} />
+                  <Logo white={true} />
                 </motion.div>
                 <div>
                   <div className="text-lg font-bold text-slate-800 dark:text-white">Ascent Asia Advisory</div>

@@ -1,3 +1,6 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Globe, TrendingUp, Shield, ChevronRight } from "lucide-react"
@@ -6,8 +9,18 @@ import { Button } from "@/components/ui/button"
 import NavBar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PartnerBanner from "@/components/partner-banner"
+import { useLanguage } from "@/components/language-provider"
 
 export default function ServicesPage() {
+  const [mounted, setMounted] = useState(false)
+  const { t } = useLanguage()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
   return (
     <div className="flex min-h-screen flex-col">
       <PartnerBanner />
@@ -16,26 +29,24 @@ export default function ServicesPage() {
       {/* Header */}
       <section className="bg-slate-900 py-16 md:py-24">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl">Our Services</h1>
-          <p className="mx-auto mb-8 max-w-2xl text-xl text-slate-300">
-            Comprehensive solutions for businesses expanding into Southeast Asian markets
-          </p>
+          <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl">{t("our_services")}</h1>
+          <p className="mx-auto mb-8 max-w-2xl text-xl text-slate-300">{t("services_subtitle")}</p>
           <div className="mx-auto max-w-xl">
             <div className="flex flex-wrap justify-center gap-2">
               <Link href="#market-entry" className="rounded-full bg-slate-800 px-4 py-2 text-white hover:bg-slate-700">
-                Market Entry
+                {t("market_entry")}
               </Link>
               <Link href="#regulatory" className="rounded-full bg-slate-800 px-4 py-2 text-white hover:bg-slate-700">
-                Regulatory Compliance
+                {t("regulatory_compliance")}
               </Link>
               <Link href="#business-dev" className="rounded-full bg-slate-800 px-4 py-2 text-white hover:bg-slate-700">
-                Business Development
+                {t("business_development")}
               </Link>
               <Link href="#partnerships" className="rounded-full bg-slate-800 px-4 py-2 text-white hover:bg-slate-700">
-                Strategic Partnerships
+                {t("strategic_partnerships")}
               </Link>
               <Link href="#advisory" className="rounded-full bg-slate-800 px-4 py-2 text-white hover:bg-slate-700">
-                Advisory Services
+                {t("advisory_services")}
               </Link>
             </div>
           </div>
@@ -50,23 +61,20 @@ export default function ServicesPage() {
               <div>
                 <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-amber-700">
                   <Globe className="h-4 w-4" />
-                  <span className="text-sm font-medium">Market Entry</span>
+                  <span className="text-sm font-medium">{t("market_entry")}</span>
                 </div>
                 <h2 className="mb-6 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">
-                  Strategic Market Entry Solutions
+                  {t("market_entry_strategy_title")}
                 </h2>
-                <p className="mb-8 text-lg text-slate-600 dark:text-slate-400">
-                  Navigate the complexities of Southeast Asian markets with our tailored entry strategies designed for
-                  your business needs.
-                </p>
+                <p className="mb-8 text-lg text-slate-600 dark:text-slate-400">{t("market_entry_strategy_desc")}</p>
                 <ul className="mb-8 space-y-4">
                   <li className="flex items-start">
                     <div className="mr-3 mt-1 rounded-full bg-amber-100 p-1">
                       <ChevronRight className="h-4 w-4 text-amber-600" />
                     </div>
                     <div>
-                      <span className="font-medium dark:text-white">Market Research & Analysis</span> - Comprehensive
-                      insights into market dynamics, competitor landscape, and consumer behavior.
+                      <span className="font-medium dark:text-white">{t("market_research")}</span> -{" "}
+                      {t("market_research_desc")}
                     </div>
                   </li>
                   <li className="flex items-start">
@@ -74,8 +82,7 @@ export default function ServicesPage() {
                       <ChevronRight className="h-4 w-4 text-amber-600" />
                     </div>
                     <div>
-                      <span className="font-medium">Entry Strategy Development</span> - Customized approaches for market
-                      penetration based on your business model and objectives.
+                      <span className="font-medium">{t("entry_strategy")}</span> - {t("entry_strategy_desc")}
                     </div>
                   </li>
                   <li className="flex items-start">
@@ -83,20 +90,19 @@ export default function ServicesPage() {
                       <ChevronRight className="h-4 w-4 text-amber-600" />
                     </div>
                     <div>
-                      <span className="font-medium">Risk Assessment</span> - Identification and mitigation of potential
-                      market entry challenges.
+                      <span className="font-medium">{t("risk_assessment")}</span> - {t("risk_assessment_desc")}
                     </div>
                   </li>
                 </ul>
                 <Button className="bg-amber-500 hover:bg-amber-600">
-                  Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  {t("learn_more")} <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </div>
             <div className="relative rounded-xl overflow-hidden">
               <Image
                 src="/images/market-entry.jpg"
-                alt="Market Entry Strategy"
+                alt={t("market_entry_strategy")}
                 width={600}
                 height={400}
                 className="h-full w-full object-cover"
@@ -113,7 +119,7 @@ export default function ServicesPage() {
             <div className="relative order-2 md:order-1 rounded-xl overflow-hidden">
               <Image
                 src="/images/regulatory.jpg"
-                alt="Regulatory Compliance"
+                alt={t("regulatory_compliance")}
                 width={600}
                 height={400}
                 className="h-full w-full object-cover"
@@ -123,23 +129,20 @@ export default function ServicesPage() {
               <div>
                 <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-amber-700">
                   <Shield className="h-4 w-4" />
-                  <span className="text-sm font-medium">Regulatory Compliance</span>
+                  <span className="text-sm font-medium">{t("regulatory_compliance")}</span>
                 </div>
                 <h2 className="mb-6 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">
-                  Navigate Regulatory Landscapes
+                  {t("navigate_regulatory_title")}
                 </h2>
-                <p className="mb-8 text-lg text-slate-600 dark:text-slate-400">
-                  Ensure compliance with local regulations across Southeast Asian markets while maintaining operational
-                  efficiency.
-                </p>
+                <p className="mb-8 text-lg text-slate-600 dark:text-slate-400">{t("navigate_regulatory_desc")}</p>
                 <ul className="mb-8 space-y-4">
                   <li className="flex items-start">
                     <div className="mr-3 mt-1 rounded-full bg-amber-100 p-1">
                       <ChevronRight className="h-4 w-4 text-amber-600" />
                     </div>
                     <div>
-                      <span className="font-medium">Regulatory Assessment</span> - Comprehensive evaluation of
-                      applicable regulations in your target markets.
+                      <span className="font-medium">{t("regulatory_assessment")}</span> -{" "}
+                      {t("regulatory_assessment_desc")}
                     </div>
                   </li>
                   <li className="flex items-start">
@@ -147,8 +150,7 @@ export default function ServicesPage() {
                       <ChevronRight className="h-4 w-4 text-amber-600" />
                     </div>
                     <div>
-                      <span className="font-medium">Compliance Strategy</span> - Development of tailored compliance
-                      frameworks that align with your business goals.
+                      <span className="font-medium">{t("compliance_strategy")}</span> - {t("compliance_strategy_desc")}
                     </div>
                   </li>
                   <li className="flex items-start">
@@ -156,13 +158,12 @@ export default function ServicesPage() {
                       <ChevronRight className="h-4 w-4 text-amber-600" />
                     </div>
                     <div>
-                      <span className="font-medium">Ongoing Support</span> - Continuous monitoring of regulatory changes
-                      and implementation of necessary adjustments.
+                      <span className="font-medium">{t("ongoing_support")}</span> - {t("ongoing_support_desc")}
                     </div>
                   </li>
                 </ul>
                 <Button className="bg-amber-500 hover:bg-amber-600">
-                  Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  {t("learn_more")} <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </div>
@@ -178,23 +179,19 @@ export default function ServicesPage() {
               <div>
                 <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-amber-700">
                   <TrendingUp className="h-4 w-4" />
-                  <span className="text-sm font-medium">Business Development</span>
+                  <span className="text-sm font-medium">{t("business_development")}</span>
                 </div>
                 <h2 className="mb-6 text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">
-                  Accelerate Your Growth
+                  {t("accelerate_growth_title")}
                 </h2>
-                <p className="mb-8 text-lg text-slate-600 dark:text-slate-400">
-                  Develop and implement strategies that drive business growth and expand your market presence in
-                  Southeast Asia.
-                </p>
+                <p className="mb-8 text-lg text-slate-600 dark:text-slate-400">{t("accelerate_growth_desc")}</p>
                 <ul className="mb-8 space-y-4">
                   <li className="flex items-start">
                     <div className="mr-3 mt-1 rounded-full bg-amber-100 p-1">
                       <ChevronRight className="h-4 w-4 text-amber-600" />
                     </div>
                     <div>
-                      <span className="font-medium">Growth Strategy</span> - Tailored roadmaps for sustainable business
-                      expansion in your target markets.
+                      <span className="font-medium">{t("growth_strategy")}</span> - {t("growth_strategy_desc")}
                     </div>
                   </li>
                   <li className="flex items-start">
@@ -202,8 +199,7 @@ export default function ServicesPage() {
                       <ChevronRight className="h-4 w-4 text-amber-600" />
                     </div>
                     <div>
-                      <span className="font-medium">Market Penetration</span> - Tactical approaches to increase market
-                      share and customer acquisition.
+                      <span className="font-medium">{t("market_penetration")}</span> - {t("market_penetration_desc")}
                     </div>
                   </li>
                   <li className="flex items-start">
@@ -211,20 +207,20 @@ export default function ServicesPage() {
                       <ChevronRight className="h-4 w-4 text-amber-600" />
                     </div>
                     <div>
-                      <span className="font-medium">Performance Monitoring</span> - Continuous evaluation of business
-                      metrics to optimize growth strategies.
+                      <span className="font-medium">{t("performance_monitoring")}</span> -{" "}
+                      {t("performance_monitoring_desc")}
                     </div>
                   </li>
                 </ul>
                 <Button className="bg-amber-500 hover:bg-amber-600">
-                  Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  {t("learn_more")} <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </div>
             <div className="relative rounded-xl overflow-hidden">
               <Image
                 src="/images/business-dev.jpg"
-                alt="Business Development"
+                alt={t("business_development")}
                 width={600}
                 height={400}
                 className="h-full w-full object-cover"
@@ -237,14 +233,10 @@ export default function ServicesPage() {
       {/* CTA */}
       <section className="bg-gradient-to-r from-slate-800 to-slate-900 py-16">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">
-            Ready to explore opportunities in Southeast Asia?
-          </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-xl text-white/90">
-            Schedule a consultation with our experts to discuss your business objectives.
-          </p>
+          <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl">{t("explore_opportunities")}</h2>
+          <p className="mx-auto mb-8 max-w-2xl text-xl text-white/90">{t("explore_opportunities_desc")}</p>
           <Button size="lg" className="bg-amber-500 hover:bg-amber-600">
-            Contact Us Today
+            {t("contact_us_today")}
           </Button>
         </div>
       </section>

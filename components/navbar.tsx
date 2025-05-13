@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { Menu, X, ChevronDown, Globe, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
@@ -10,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useLanguage, languages, type LanguageCode } from "@/components/language-provider"
+import Logo from "@/components/logo-with-filter"
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -38,7 +38,7 @@ export default function NavBar() {
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
         <Link href="/" className="flex items-center gap-2">
           <motion.div whileHover={{ rotate: [0, -10, 10, -10, 0] }} transition={{ duration: 0.5 }}>
-            <Image src="/images/logo.png" alt="Ascent Asia Advisory" width={40} height={40} />
+            <Logo white={theme === "dark"} />
           </motion.div>
           <div>
             <div className="text-lg font-bold text-slate-800 dark:text-white">Ascent Asia Advisory</div>
@@ -220,6 +220,10 @@ export default function NavBar() {
               >
                 {t("contact")}
               </Link>
+
+              <motion.div className="flex justify-center">
+                <Logo white={theme === "dark"} />
+              </motion.div>
 
               {mounted && (
                 <Button
